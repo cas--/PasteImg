@@ -1,0 +1,14 @@
+# PasteImg
+https://github.com/cas--/PasteImg
+
+by Calum Lind <calumlind@gmail.com>
+
+## Description
+
+Pastes an image from the clipboard into a new file. 
+
+# Version Info
+
+## v0.1 [15/05/2011]
+
+* Intial Release
