@@ -1,34 +1,29 @@
-#! /usr/bin/python
+#!/usr/bin/env python
 
 import pygtk
-pygtk.require('2.0')
 import gtk
-import os
+#import os
 import sys
 
 class PasteImg:
-	
-	def __init__(self):
-		self.paste_image(sys.argv[1])
-	
-	def callback_img(self, clipboard, pixbuf, f):
-		if pixbuf is None:
-			print "No image available!"
-		else:
-			print "Saving Image to %s" % f
-			pixbuf.save(f, "png")
-			
-		gtk.main_quit()
-			
-	def paste_image(self, f):
-		clipb = gtk.clipboard_get()
-		#if clipb.wait_is_image_available():
-		#	print "%r" % clipb.wait_is_image_available()
-		clipb.request_image(self.callback_img, f)
 
-	def main(self):
-		gtk.main()
+    def __init__(self):
+        clipb = gtk.clipboard_get()
+        clipb.request_image(self.callback_img, sys.argv[1])
+
+    def callback_img(self, clipboard, pixbuf, filename):
+        imgType="png"
+        if pixbuf is None:
+            print "No image available!"
+        else:
+            print "Saving clipboard image to file(%s): %s" % (imgType, filename)
+            pixbuf.save(filename, imgType)
+
+        gtk.main_quit()
+        
+    def main(self):
+        gtk.main()
 
 if __name__ == "__main__":
-	pimg = PasteImg()
-	pimg.main()
+    pimg = PasteImg()
+    pimg.main()

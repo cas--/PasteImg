@@ -1,11 +1,18 @@
-# PasteImg
-https://github.com/cas--/PasteImg
+#[PasteImg](https://github.com/cas--/PasteImg)
 
 by Calum Lind <calumlind@gmail.com>
 
 ## Description
 
 Pastes an image from the clipboard into a new file. 
+
+Currently only outputs in png format regardless of extension. 
+
+# Usage
+
+Make sure you have an image waiting on the clipboard then run:
+
+`pasteimg image.png`
 
 # Version Info
 
