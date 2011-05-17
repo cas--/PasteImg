@@ -2,23 +2,39 @@
 
 import pygtk
 import gtk
-#import os
+import os
 import sys
 
 class PasteImg:
+    
+    imgTypeSet = ['png', 'bmp', 'jpg', 'jpeg', 'tiff','ico']
 
     def __init__(self):
         clipb = gtk.clipboard_get()
         clipb.request_image(self.callback_img, sys.argv[1])
 
     def callback_img(self, clipboard, pixbuf, filename):
-        imgType="png"
+        #split filename suffix 
+        (shortname, extension) = os.path.splitext(filename)
+        ext=extension.replace('.','')
+        if ext in self.imgTypeSet:
+            if ext == 'jpg':
+                ext = 'jpeg'
+            imgType=ext
+            #imgType="png"
+        else:
+            print "Not a known file extenstion %s" % (ext)
+            self.exitPasteImg()
+            
         if pixbuf is None:
             print "No image available!"
         else:
             print "Saving clipboard image to file(%s): %s" % (imgType, filename)
             pixbuf.save(filename, imgType)
-
+        
+        self.exitPasteImg()
+            
+    def exitPasteImg(self):
         gtk.main_quit()
         
     def main(self):
