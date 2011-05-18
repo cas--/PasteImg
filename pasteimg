@@ -17,6 +17,7 @@ class PasteImg:
         parser = argparse.ArgumentParser(description='PasteImg: Output clipboard to file')
         parser.add_argument('filename', nargs='?', default='',
                 help='filename to use')
+        parser.add_argument('-v','--version', action='version', version='%(prog)s 0.2')
 
         args = parser.parse_args()
         filename = args.filename
