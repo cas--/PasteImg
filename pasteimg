@@ -4,6 +4,8 @@ import pygtk
 import gtk
 import os
 import sys
+import random
+import argparse
 
 class PasteImg:
     
@@ -11,11 +13,22 @@ class PasteImg:
     imgTypeSet = ['png', 'bmp', 'jpg', 'jpeg', 'tiff']
 
     def __init__(self):
+        
+        parser = argparse.ArgumentParser(description='PasteImg: Output clipboard to file')
+        parser.add_argument('filename', nargs='?', default='',
+                help='filename to use')
+
+        args = parser.parse_args()
+        filename = args.filename
+        
         clipb = gtk.clipboard_get()
-        clipb.request_image(self.callback_img, sys.argv[1])
+        clipb.request_image(self.callback_img, filename)
 
     def callback_img(self, clipboard, pixbuf, filename):
         
+        if filename == '':
+            filename=''.join(random.choice('0123456789abcdef') for i in range(12))
+            
          # Split filename suffix
         (shortname, extension) = os.path.splitext(filename)
         fileExt=extension.replace('.','')
