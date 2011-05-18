@@ -1,0 +1,4 @@
+* Verify path location if included in filename
+* Default path location
+* Do overwrite existing file
+* Add copy to clipobard option
