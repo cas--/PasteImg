@@ -7,7 +7,8 @@ import sys
 
 class PasteImg:
     
-    imgTypeSet = ['png', 'bmp', 'jpg', 'jpeg', 'tiff', 'ico']
+    # Removed 'ico' from list until can catch size error
+    imgTypeSet = ['png', 'bmp', 'jpg', 'jpeg', 'tiff']
 
     def __init__(self):
         clipb = gtk.clipboard_get()
