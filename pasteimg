@@ -7,36 +7,46 @@ import sys
 
 class PasteImg:
     
-    imgTypeSet = ['png', 'bmp', 'jpg', 'jpeg', 'tiff','ico']
+    imgTypeSet = ['png', 'bmp', 'jpg', 'jpeg', 'tiff', 'ico']
 
     def __init__(self):
         clipb = gtk.clipboard_get()
         clipb.request_image(self.callback_img, sys.argv[1])
 
     def callback_img(self, clipboard, pixbuf, filename):
-        #split filename suffix 
+        
+         # Split filename suffix
         (shortname, extension) = os.path.splitext(filename)
-        ext=extension.replace('.','')
-        if ext in self.imgTypeSet:
-            if ext == 'jpg':
-                ext = 'jpeg'
-            imgType=ext
-            #imgType="png"
-        else:
-            print "Not a known file extenstion %s" % (ext)
-            self.exitPasteImg()
+        fileExt=extension.replace('.','')
+        
+        # Default to png
+        imgType="png"
+
+        if fileExt in self.imgTypeSet:
+            # pixbuf only recongnises 'jpeg' as type
+            if fileExt == 'jpg': fileExt = 'jpeg'
+            imgType=fileExt
             
-        if pixbuf is None:
-            print "No image available!"
+        elif fileExt == "":
+            fileExt=imgType
+            
         else:
-            print "Saving clipboard image to file(%s): %s" % (imgType, filename)
+            # Wrong extension
+            print "Error: Unknown file extension '%s'" % extension
+            sys.exit()
+
+        # Save clipboard image to file
+        if pixbuf is None:
+            print 'No image available!'
+        else:
+            print 'Saving clipboard image to file(%s): %s.%s' % (imgType, shortname, fileExt)
             pixbuf.save(filename, imgType)
         
         self.exitPasteImg()
             
     def exitPasteImg(self):
         gtk.main_quit()
-        
+
     def main(self):
         gtk.main()
 
